@@ -37,6 +37,13 @@ def compoundInterest(principal, annual_rate, years, compounding_base):
     outcome = principal * ((1 + (annual_rate / compounding_base))**(years * compounding_base))
     return outcome
 
+def calculateFinalPayment(lending_data, time, compounding_rate):
+    outcome = []
+    for rate, quantity in lending_data:
+        final_quantity = compoundInterest(quantity, rate, time, compounding_rate)
+        outcome.append(final_quantity)
+    return sum(outcome)
+
 def getFile():
     file_error = 'Please provide a valid file value.'
     try:
