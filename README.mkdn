@@ -1,0 +1,11 @@
+Welcome to compound-interest! This is a small yet powerful application, aimed at providing the best (i.e. cheapest) lending rates 
+in the market for borrowers. You can select any amount from £100 to £15000, provided the selected figure is a multiple of 100. 
+The compounding rate is here applied on a monthly basis, although you might be able to tweak the application to change that... 
+You can also select for how long you want to borrow the money, by specifying the lending period in months. 
+In order to use the application, you must use the command-line. The application needs three arguments:
+..1) The file from which you'll obtain the data about money available
+for lending and the rates at which it is available.
+..2) The amount you want to borrow.
+..3) Optionally, you can specify for how long you want to borrow the
+money, in months. If you don't, the application assumes that you 
+want to borrow it for 12 months (i.e. 1 year). 
