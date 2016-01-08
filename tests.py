@@ -133,7 +133,7 @@ class TestFinalValues(TestCase):
         principal = 1000
         months = 24
         rate, monthly, total = produceFinalValues(file, principal, months)
-        self.assertEqual(rate, 0.07004)
+        self.assertEqual(rate, 7.0)
         self.assertEqual(round(total, 2), 1149.90)
                         
 
