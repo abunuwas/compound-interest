@@ -33,6 +33,10 @@ def buildLend(quantity_borrow, lending_data):
             needed_rates.append((rate, quantity))
     return needed_rates
 
+def compoundInterest(principal, annual_rate, years, compounding_base):
+    outcome = principal * ((1 + (annual_rate / compounding_base))**(years * compounding_base))
+    return outcome
+
 def getFile():
     file_error = 'Please provide a valid file value.'
     try:
