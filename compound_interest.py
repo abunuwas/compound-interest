@@ -19,7 +19,20 @@ all the values in the Rate column and the Available column are digits')
             raise SystemExit
     return rates
 
-    
+def sortData(data):
+    return sorted(data, key=lambda values: values[0])
+
+def buildLend(quantity_borrow, lending_data):
+    apply_ceiling = lambda amount, quantity, ceiling: quantity if amount+quantity<=1000 else ceiling-amount
+    amount = 0
+    needed_rates = []
+    for rate, quantity in lending_data:
+        if amount < 1000:
+            quantity = apply_ceiling(amount, quantity, quantity_borrow)
+            amount += quantity       
+            needed_rates.append((rate, quantity))
+    return needed_rates
+
 def getFile():
     file_error = 'Please provide a valid file value.'
     try:
@@ -77,6 +90,10 @@ def main():
     principal = getPrincipal()
     months = getMonths()
     print(file, principal, months)
+
+    data = getData('market.csv')
+    for row in data:
+    	print(row)
 
 if __name__ == "__main__":
     main()
