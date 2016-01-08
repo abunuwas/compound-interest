@@ -1,8 +1,8 @@
 import unittest
 from unittest import TestCase
 
-from compound_interest import getFile, getPrincipal, getMonths, processFile, getData, buildLend, compoundInterest
-
+from compound_interest import getFile, getPrincipal, getMonths, processFile
+from compound_interest import getData, buildLend, compoundInterest, produceFinalValues
 
 class TestFileInput(TestCase):
 
@@ -124,7 +124,18 @@ class TestCompoundInterest(TestCase):
     def test_value_total_payment(self):
         final_payment = compoundInterest(1000, 0.07, 3, 12)
         self.assertEqual(round(final_payment, 2), 1232.93)
-                
+
+
+class TestFinalValues(TestCase):
+
+    def test_final_values(self):
+        file = 'market.csv'
+        principal = 1000
+        months = 24
+        rate, monthly, total = produceFinalValues(file, principal, months)
+        self.assertEqual(rate, 0.07004)
+        self.assertEqual(round(total, 2), 1149.90)
+                        
 
 if __name__ == '__main__':
     unittest.main()

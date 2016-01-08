@@ -53,6 +53,22 @@ def calculateAverageWeightedRate(lending_data):
         weighted_rates.append(weighted_rate)
     return sum(weighted_rates)
 
+def getMonthlyPayments(final_payment, months):
+    return final_payment / months
+
+def monthToYears(num_months):
+    return num_months / 12
+
+def produceFinalValues(file, principal, months):
+    years = monthToYears(months)
+    lending_data = getData(file)
+    lending_data = sorted(lending_data)
+    needed_rates = buildLend(principal, lending_data)
+    total_payment = calculateFinalPayment(needed_rates, years, 12)
+    weighted_average_rate = calculateAverageWeightedRate(needed_rates)
+    monthly_payments = getMonthlyPayments(total_payment, months)
+    return weighted_average_rate, monthly_payments, total_payment
+
 def getFile():
     file_error = 'Please provide a valid file value.'
     try:
