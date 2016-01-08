@@ -44,6 +44,15 @@ def calculateFinalPayment(lending_data, time, compounding_rate):
         outcome.append(final_quantity)
     return sum(outcome)
 
+def calculateAverageWeightedRate(lending_data):
+    amount_borrowed = sum([quantity for rate, quantity in lending_data])
+    weighted_rates = []
+    for rate, quantity in lending_data:
+        weight = quantity / amount_borrowed
+        weighted_rate = rate * weight
+        weighted_rates.append(weighted_rate)
+    return sum(weighted_rates)
+
 def getFile():
     file_error = 'Please provide a valid file value.'
     try:
