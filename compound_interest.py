@@ -59,16 +59,6 @@ def getMonthlyPayments(final_payment, months):
 def monthToYears(num_months):
     return num_months / 12
 
-def produceFinalValues(file, principal, months):
-    years = monthToYears(months)
-    lending_data = getData(file)
-    lending_data = sorted(lending_data)
-    needed_rates = buildLend(principal, lending_data)
-    total_payment = calculateFinalPayment(needed_rates, years, 12)
-    weighted_average_rate = calculateAverageWeightedRate(needed_rates)
-    monthly_payments = getMonthlyPayments(total_payment, months)
-    return weighted_average_rate, monthly_payments, total_payment
-
 def getFile():
     file_error = 'Please provide a valid file value.'
     try:
@@ -119,17 +109,33 @@ to borrow your money for 12 months.')
         print('Please provide a valid number of months.')
         sys.exit()
         
+def produceFinalValues(file, principal, months):
+    years = monthToYears(months)
+    lending_data = getData(file)
+    lending_data = sorted(lending_data)
+    needed_rates = buildLend(principal, lending_data)
+    total_payment = calculateFinalPayment(needed_rates, years, 12)
+    weighted_average_rate = calculateAverageWeightedRate(needed_rates)
+    monthly_payments = getMonthlyPayments(total_payment, months)
+    return weighted_average_rate, monthly_payments, total_payment
+
+def displayInformation(principal, rate, monthly, total):
+    message = '''
+Requested amount: £{amount:.0f}
+Rate : {rate}%
+Monthly repayment: £{monthly}
+Total repayment: £{total}
+'''.format(amount=principal, rate=rate, monthly=monthly, total=total)
+    return message
 
 def main():
     import sys
     file = getFile()
     principal = getPrincipal()
     months = getMonths()
-    print(file, principal, months)
-
-    data = getData('market.csv')
-    for row in data:
-    	print(row)
+    rate, monthly, total = produceFinalValues(file, principal, months)
+    information = displayInformation(principal, rate, monthly, total)
+    print(information)
 
 if __name__ == "__main__":
     main()
