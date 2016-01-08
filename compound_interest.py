@@ -2,6 +2,14 @@ import sys
 import csv
 import re
 
+def getData(file):
+    rates = []
+    with open(file) as file:
+        data = csv.DictReader(file)
+        for row in data:
+            rates.append((float(row['Rate']), float(row['Available'])))
+    return rates
+
 def getFile():
     file_error = 'Please provide a valid file value.'
     try:
