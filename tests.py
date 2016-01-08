@@ -1,7 +1,7 @@
 import unittest
 from unittest import TestCase
 
-from compound_interest import getFile, getPrincipal, getMonths
+from compound_interest import getFile, getPrincipal, getMonths, processFile
 
 
 class TestFileInput(TestCase):
@@ -90,6 +90,23 @@ class TestMonthsInput(TestCase):
         sys.argv = ['', 'csv', 'asdf', '3']
         months = getMonths()
         self.assertEqual(months, float('3'))
+
+
+class TestFileData(TestCase):
+
+    def test_rates_no_digits(self):
+        import csv
+        values = ['Lender,Rate,Available',
+                  'John,asdf,1000']
+        rates = []
+        self.assertRaises(SystemExit, processFile, file=values, rates=rates)
+
+    def test_available_no_digits(self):
+        import csv
+        values = ['Lender,Rate,Available',
+                  'John,0.001,asdf']
+        rates = []
+        self.assertRaises(SystemExit, processFile, file=values, rates=rates)
 
 
 if __name__ == '__main__':

@@ -5,11 +5,21 @@ import re
 def getData(file):
     rates = []
     with open(file) as file:
-        data = csv.DictReader(file)
-        for row in data:
-            rates.append((float(row['Rate']), float(row['Available'])))
+        rates = processFile(file, rates)
     return rates
 
+def processFile(file, rates):
+    data = csv.DictReader(file)
+    for row in data:
+        try:
+            rates.append((float(row['Rate']), float(row['Available'])))
+        except ValueError:
+            print('It seems that the file contains corrupted data. Please ensure that \
+all the values in the Rate column and the Available column are digits')
+            raise SystemExit
+    return rates
+
+    
 def getFile():
     file_error = 'Please provide a valid file value.'
     try:
